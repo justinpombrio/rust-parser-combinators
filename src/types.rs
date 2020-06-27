@@ -190,8 +190,13 @@ impl<X, Y, P: Parse<Output = X>> Parse for Map<X, Y, P> {
 
 /****** Combinators: Recursion ******/
 
-#[derive(Clone)]
 pub struct Knot<X>(pub Rc<RefCell<Option<Box<dyn Parse<Output = X>>>>>);
+
+impl<X> Clone for Knot<X> {
+    fn clone(&self) -> Knot<X> {
+        Knot(self.0.clone())
+    }
+}
 
 impl<X> Knot<X> {
     pub fn new() -> Knot<X> {
