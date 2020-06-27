@@ -65,3 +65,9 @@ impl<X> Knot<X> {
         opt.replace(Box::new(parser.0));
     }
 }
+
+impl<X, P: Parse<Output = X> + 'static> Parser<P> {
+    pub fn boxed(self) -> Parser<Boxed<X>> {
+        Parser(Boxed(Box::new(self.0)))
+    }
+}

@@ -209,3 +209,14 @@ impl<X> Parse for Knot<X> {
         }
     }
 }
+
+/****** Combinators: Boxing ******/
+
+pub struct Boxed<X>(pub Box<dyn Parse<Output = X>>);
+
+impl<X> Parse for Boxed<X> {
+    type Output = X;
+    fn parse<'a>(&self, src: &'a str) -> PResult<'a, X> {
+        self.0.parse(src)
+    }
+}
